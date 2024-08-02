@@ -1,39 +1,37 @@
 <h1>
-  List of all movies
+  List of All Movies
 </h1>
 
 <hr>
 
 <form action="/insert_movie" method="post">
+  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+
   <div>
     <label for="title_box">
       Title
     </label>
-
-    <input type="text" id="title_box" name="query_title">
+    <input type="text" id="title_box" name="query_title" required>
   </div>
 
   <div>
     <label for="year_box">
       Year
     </label>
-
-    <input type="text" id="year_box" name="query_year">
+    <input type="number" id="year_box" name="query_year" required>
   </div>
 
   <div>
     <label for="duration_box">
       Duration
     </label>
-
-    <input type="text" id="duration_box" name="query_duration">
+    <input type="number" id="duration_box" name="query_duration" required>
   </div>
 
   <div>
     <label for="description_box">
       Description
     </label>
-
     <textarea id="description_box" name="query_description" rows="3"></textarea>
   </div>
 
@@ -41,19 +39,17 @@
     <label for="image_box">
       Image
     </label>
-
-    <input type="text" id="image_box" name="query_image">
+    <input type="url" id="image_box" name="query_image">
   </div>
 
   <div>
     <label for="director_id_box">
       Director ID
     </label>
-
-    <input type="text" id="director_id_box" name="query_director_id">
+    <input type="number" id="director_id_box" name="query_director_id">
   </div>
 
-  <button>
+  <button type="submit">
     Create movie
   </button>
 </form>
@@ -65,23 +61,18 @@
     <th>
       ID
     </th>
-
     <th>
       Image
     </th>
-
     <th>
       Title
     </th>
-
     <th>
       Year
     </th>
-
     <th>
       Director
     </th>
-
     <th>
     </th>
   </tr>
@@ -91,26 +82,29 @@
     <td>
       <%= a_movie.id %>
     </td>
-
     <td>
-      <img src="<%= a_movie.image %>" style="width:250px;">
+      <% if a_movie.image.present? %>
+        <img src="<%= a_movie.image %>" alt="<%= a_movie.title %>" style="width:250px;">
+      <% else %>
+        No image available
+      <% end %>
     </td>
-
     <td>
       <%= a_movie.title %>
     </td>
-
     <td>
       <%= a_movie.year %>
     </td>
-
     <td>
-      <%= a_movie.director.name %>
+      <% if a_movie.director.present? %>
+        <%= a_movie.director.name %>
+      <% else %>
+        No director assigned
+      <% end %>
     </td>
-
     <td>
       <a href="/movies/<%= a_movie.id %>">
-        Show details
+        Show Details
       </a>
     </td>
   </tr>
